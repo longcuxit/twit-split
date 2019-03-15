@@ -1,0 +1,21 @@
+@import './mixins.scss';
+@import './container.scss';
+@import './list.scss';
+@import './form.scss';
+@import './field.scss';
+
+html {
+  font-size: 14px;
+}
+body {
+  padding: 0;
+  margin: 0;
+}
+.c-twitsplit {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  .c-list {
+    flex: 1;
+  }
+}

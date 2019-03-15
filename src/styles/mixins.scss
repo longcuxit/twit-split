@@ -1,0 +1,11 @@
+@mixin media($size) {
+  @media (min-width: #{$size}) {
+    @content;
+  }
+}
+
+@mixin media-md() {
+  @include media(720px){
+    @content;
+  }
+}

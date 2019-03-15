@@ -11,7 +11,7 @@ class List extends React.Component {
     const { items } = this.props;
     
     return (
-      <ul className="c-list">
+      <ul className="c-list container">
         {items.map((item, index) => {
           return (<li key={index}>{item}</li>)
         })}

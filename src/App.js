@@ -4,7 +4,7 @@ import { Provider } from './components/Context';
 import List from './components/List';
 import Form from './components/Form';
 
-// import './styles/all.scss';
+import './styles/all.scss';
 
 class App extends Component {
   render() {

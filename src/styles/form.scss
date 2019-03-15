@@ -1,0 +1,65 @@
+.c-form {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  background-color: #fff;
+  border-top: 1px solid #e5e5e5;
+  box-shadow: 0 0 1px rgba(#000, 0.1);
+  .c-field {
+    flex: 1;
+    &_label {
+      display: none;
+    }
+    &_area {
+      display: block;
+      border: 1px solid #d2d2d2;
+      border-radius: 2.2em;
+      background-color: #f0f0f0;
+      padding: 1em 1.5em;
+    }
+  }
+  &_form {
+    display: flex;
+    position: relative;
+    padding: 1.2em 0 1.2em 0.8em;
+  }
+  &_error {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-bottom: 0.25em;
+    border: 1px solid #b62525;
+    padding: 0.5em;
+    border-radius: 0.3333em;
+    color: #b62525;
+    background-color: #fff;
+    &::before {
+      content: '';
+      width: 0.5em;
+      height: 0.5em;
+      background-color: #fff;
+      border: 1px solid #b62525;
+      border-left: none;
+      border-top: none;
+      position: absolute;
+      bottom: -0.3em;
+      left: 50%;
+      transform: translateX(-50%) rotate(45deg);
+    }
+  }
+  &_send {
+    border: none;
+    outline: none;
+    background-color: transparent;
+    cursor: pointer;
+    width: 5em;
+    i {
+      font-size: 2em;
+    }
+  }
+  &_counter {
+    font-size: 0.875em;
+  }
+}

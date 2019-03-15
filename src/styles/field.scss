@@ -1,0 +1,15 @@
+.c-field {
+  &_area {
+    padding: 8px;
+    border: 1px solid;
+    border-radius: 4px;
+    display: inline-block;
+  }
+  &_input {
+    display: block;
+    outline: none;
+    width: 100%;
+    font-size: 1em;
+    background-color: transparent;
+  }
+}

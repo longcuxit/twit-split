@@ -18,8 +18,11 @@ class Form extends React.Component {
     try {
       const msgs = splitMessage.calculate(msg);
       const lastMsg = msgs[msgs.length -1];
-      state.length = 50 - lastMsg.length;  //TODO: ENV_CONFIG
-      state.count = msgs.length;
+      Object.assign(state, {
+        length: 50 - lastMsg.length,  //TODO: ENV_CONFIG
+        count: msgs.length,
+        error: false
+      })
     } catch (e) {
       if (e.name === 'msg.wordsLonger') {
         state.error = e.message;
@@ -36,21 +39,30 @@ class Form extends React.Component {
     const { error, msg, length, count } = this.state;
 
     return (
-      <form className="c-form" onSubmit={this.onSubmit}>
-        {error && <div className="c-form_error">{error}</div>}
-        <div className="c-form_counter">{length} ({count}) </div>
-        <TextField
-          label="Message:"
-          value={msg}
-          onChange={e => this.setMsg(e.target.value)}
-          onKeyDown={e => {
-            if (e.keyCode === 13 && !e.shiftKey) {
-              const form = e.target.closest('form');
-              return form && this.onSubmit(e);
-            }
-          }} />
-          <button type="submit">➢</button>
-      </form>
+      <div className="c-form">
+        <div className="container">
+          <form className="c-form_form row" onSubmit={this.onSubmit}>
+            {error && <div className="c-form_error">{error}</div>}
+            
+            <TextField
+              label="Message:"
+              placeholder="Type your message"
+              rows="1"
+              value={msg}
+              onChange={e => this.setMsg(e.target.value)}
+              onKeyDown={e => {
+                if (e.keyCode === 13 && !e.shiftKey) {
+                  const form = e.target.closest('form');
+                  return form && this.onSubmit(e);
+                }
+              }} />
+              <button type="submit" className="c-form_send">
+                <div className="c-form_counter">{length} ({count}) </div>
+                <i>➢</i>
+              </button>
+          </form>
+        </div>
+      </div>
     )
   }
 }

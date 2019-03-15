@@ -40,6 +40,13 @@ class TextField extends React.Component {
     });
   }
 
+  componentDidUpdate() {
+    const { textarea } = this.refs;
+    if (textarea.value.length === 0) {
+      textarea.style.height = 'auto';
+    }
+  }
+
   render() {
     const { props } = this;
     return (
@@ -50,7 +57,7 @@ class TextField extends React.Component {
             {...props}
             onChange={this.onChange}
             ref="textarea"
-            className="c-field_area_input"
+            className="c-field_input"
             />
           </div>
       </label>

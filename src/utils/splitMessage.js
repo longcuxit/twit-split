@@ -1,3 +1,5 @@
+import { ErrorHandle } from './ErrorHandle';
+
 const whiteSpace = [
   9, 10, 11, 12, 13, 32, 133, 160,
   5760, 8192, 8193, 8194, 8195, 8196,
@@ -13,19 +15,23 @@ function findIndex(msg) {
 
 function split(msg) {
   msg = msg.trim();
+  if (msg.length < 1) {
+    throw new ErrorHandle('msg.required', 'Message is required!');
+  }
   if (msg.length < 51) {
     return [msg];
   }
   const index = findIndex(msg);
   if (index < 1) {
-    throw Error('Words longer than 50 characters!');
+    throw new ErrorHandle('msg.wordsLonger', 'Words longer than 50 characters!');
   }
   return [msg.slice(0, index)]
     .concat(split(msg.slice(index + 1)));
 }
 
-export const splitMessage = (msg) => {
+export function splitMessage(msg) {
   const msgs = split(msg);
   if (msgs.length === 1) return msgs;
   return msgs.map((msg, index) => `${index + 1}/${msgs.length} ${msg}`);
 }
+splitMessage.calculate = split;

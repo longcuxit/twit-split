@@ -18,6 +18,9 @@
       background-color: #f0f0f0;
       padding: 1em 1.5em;
     }
+    &_input {
+      overflow: hidden;
+    }
   }
   &_form {
     display: flex;

@@ -11,10 +11,18 @@ body {
   padding: 0;
   margin: 0;
 }
+#root {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
 .c-twitsplit {
-  height: 100vh;
+  height: 100%;
+  width: 100vw;
   display: flex;
-  flex-direction: column;
+  box-sizing: border-box;
+  padding-bottom: 5.7em;
   .c-list {
     flex: 1;
   }

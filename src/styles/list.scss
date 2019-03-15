@@ -1,3 +1,23 @@
 .c-list {
- //
+  overflow: auto;
+  display: flex;
+  flex-direction: column-reverse;
+  -webkit-overflow-scrolling: touch;
+  &_items {
+    padding-top: 1em;
+    padding-bottom: 1em;
+  }
+  &__item {
+    list-style: none;
+    padding: 0.2em;
+    text-align: right;
+    .msg {
+      padding: 0.8em 1em;
+      border-radius: 1.5em;
+      white-space: pre;
+      display: inline-block;
+      border-radius: 1px solid #d2d2d2;
+      background-color: #f0f0f0;
+    }
+  }
 }

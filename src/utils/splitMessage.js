@@ -1,37 +1,59 @@
 import { ErrorHandle } from './ErrorHandle';
 
-const whiteSpace = [
-  9, 10, 11, 12, 13, 32, 133, 160,
-  5760, 8192, 8193, 8194, 8195, 8196,
-  8197, 8198, 8199, 8200, 8201, 8202,
-  8232, 8233, 8239, 8287, 12288 ].map(num => String.fromCharCode(num));
+const LIMIT = 50;
+const NUM_TEMP = String.fromCharCode(-Math.random());
+const SPACE_EXP = /\s/;
 
-function findIndex(msg) {
-  for (let i = 50; i > -1; i--) {
-    if (whiteSpace.includes(msg[i])) return i;
+function lastIndexOf(msg, at) {
+  let i = msg.length;
+  while(i-- > at) {
+    if (SPACE_EXP.test(msg[i])) {
+      return i;
+    }
   }
   return -1;
 }
 
-function split(msg) {
-  msg = msg.trim();
-  if (msg.length < 1) {
-    throw new ErrorHandle('msg.required', 'Message is required!');
+function calculate(msg, part = 1) {
+  const maxCount = Math.pow(10, part) - 1;
+  const minCount = Math.pow(10, part - 1);
+  let minLength = msg.length + 1 + (part + 1) * minCount ;
+  let i = part - 1;
+  while(i--) { minLength += (Math.pow(10,i) - Math.pow(10, i-1) - 1) * i; }
+  if (minLength/LIMIT > maxCount) return calculate(msg, part + 1);
+  let count = 1;
+  let p = '/' + Array(part).fill(NUM_TEMP);
+  let cloneMsg = msg, result = [];
+
+  while(cloneMsg.length) {
+    if (count > maxCount) return calculate(msg, part + 1);
+    const nP = count + p + ' ';
+    cloneMsg = nP + cloneMsg;
+    if (cloneMsg.length < LIMIT) {
+      result.push(cloneMsg);
+      break;
+    } else {
+      const sub = cloneMsg.slice(0, LIMIT);
+      const length = lastIndexOf(sub, nP.length);
+      if (length === -1) {
+        throw new ErrorHandle('msg.wordsLonger', 'Words longer than 50 characters!');
+      }
+      result.push(sub.slice(0, length));
+      cloneMsg = cloneMsg.slice(length + 1).trim();
+      count++;
+    }
   }
-  if (msg.length < 51) {
-    return [msg];
-  }
-  const index = findIndex(msg);
-  if (index < 1) {
-    throw new ErrorHandle('msg.wordsLonger', 'Words longer than 50 characters!');
-  }
-  return [msg.slice(0, index)]
-    .concat(split(msg.slice(index + 1)));
+
+  return result.map(msg => msg.replace(p, '/' + result.length));
 }
 
 export function splitMessage(msg) {
-  const msgs = split(msg);
-  if (msgs.length === 1) return msgs;
-  return msgs.map((msg, index) => `${index + 1}/${msgs.length} ${msg}`);
+  msg = msg.trim();
+  if (msg.length === 0) {
+    throw new ErrorHandle('msg.required', 'Message is required!');
+  }
+  if (msg.length <= LIMIT) {
+    return [msg];
+  }
+  return calculate(msg);
 }
-splitMessage.calculate = split;

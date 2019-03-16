@@ -20,7 +20,7 @@ class Form extends React.Component {
 
   setMsg = (msg) => this.setState(state => {
     try {
-      const msgs = splitMessage.calculate(msg);
+      const msgs = splitMessage(msg);
       const lastMsg = msgs[msgs.length -1];
       Object.assign(state, {
         length: 50 - lastMsg.length,  //TODO: ENV_CONFIG

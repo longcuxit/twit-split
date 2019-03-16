@@ -35,6 +35,7 @@ class TextField extends React.Component {
 
     Object.assign(textarea.style, {
       padding: 0,
+      margin: 0,
       border: 'none',
       resize: 'none'
     });

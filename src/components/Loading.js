@@ -19,4 +19,4 @@ class Loading extends React.Component {
   }
 }
 
-export default connect(Loading);
+export default connect(Loading, ({ loading }) => ({ loading }));

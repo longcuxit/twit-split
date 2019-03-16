@@ -5,8 +5,10 @@ import { connect } from './Context';
 import TextField from './TextField';
 import Transition from './Transition';
 
+const LIMIT = parseInt(process.env.REACT_APP_MSG_LIMIT || 50);
+
 class Form extends React.Component {
-  state = { msg: '', error: false, count: 0, length: 50 } //TODO: ENV_CONFIG
+  state = { msg: '', error: false, count: 0, length: LIMIT }
 
   onSubmit = async (e) => {
     e.preventDefault();
@@ -14,7 +16,7 @@ class Form extends React.Component {
       this.setState({ msg: '' });
       await this.props.sendMsg(this.state.msg);
     } catch (e) {
-      this.setState({ error: e.message })
+      this.setState({ error: e.message });
     }
   }
 
@@ -23,7 +25,7 @@ class Form extends React.Component {
       const msgs = splitMessage(msg);
       const lastMsg = msgs[msgs.length -1];
       Object.assign(state, {
-        length: 50 - lastMsg.length,  //TODO: ENV_CONFIG
+        length: LIMIT - lastMsg.length,
         count: msgs.length,
         error: false
       })
@@ -73,4 +75,4 @@ class Form extends React.Component {
   }
 }
 
-export default connect(Form);
+export default connect(Form, ({ sendMsg }) => ({ sendMsg }));

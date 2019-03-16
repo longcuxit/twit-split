@@ -1,7 +1,7 @@
 import { ErrorHandle } from './ErrorHandle';
 
-const LIMIT = 50;
-const NUM_TEMP = String.fromCharCode(-Math.random());
+const LIMIT = parseInt(process.env.REACT_APP_MSG_LIMIT || 50);
+const NUM_TEMP = String.fromCharCode(0);
 const SPACE_EXP = /\s/;
 
 function lastIndexOf(msg, at) {

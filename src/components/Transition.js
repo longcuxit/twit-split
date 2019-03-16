@@ -14,6 +14,7 @@ class Transition extends React.Component {
 
   run = () => {
     const element = ReactDOM.findDOMNode(this);
+    if (!element) return
     this.once(element, stylePrefix('transitionend'), (e) => this.forceUpdate());
     element.classList.add('run');
   }

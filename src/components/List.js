@@ -8,12 +8,25 @@ class List extends React.Component {
     items: []
   }
   cache = {
-    itemCount: 0
+    last: null
   }
+
+  onScroll = (e) => {
+    if (e.target.scrollTop === 0 ) {
+      this.props.fetchMoreItems();
+    }
+  }
+
+  componentDidMount() {
+    const { scroller } = this.refs;
+    scroller.addEventListener('scroll', this.onScroll);
+  }
+
   componentDidUpdate() {
     const { cache } = this, { items } = this.props;
-    if (cache.itemCount < items.length) {
-      cache.itemCount = items.length;
+    const last = items[items.length - 1]
+    if (cache.last !== last) {
+      cache.last = last;
       window.requestAnimationFrame(() => {
         const { scroller } = this.refs, endScroll = scroller.scrollHeight - scroller.offsetHeight;
         if (endScroll > scroller.scrollTop) {
@@ -29,10 +42,10 @@ class List extends React.Component {
     return (
       <section ref="scroller" className="c-list">
         <ul className="c-list_items container">
-          {items.map((item, index) => {
+          {items.map((item) => {
             return (
-              <li key={index} className="c-list__item">
-                <div className="msg">{item}</div>
+              <li key={item.id} className="c-list__item">
+                <div className="msg">{item.message}</div>
               </li>
             );
           })}
@@ -42,4 +55,4 @@ class List extends React.Component {
   }
 }
 
-export default connect(List);
+export default connect(List, ({ items, fetchMoreItems }) => ({ items, fetchMoreItems }));

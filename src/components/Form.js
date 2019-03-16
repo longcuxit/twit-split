@@ -7,11 +7,14 @@ import TextField from './TextField';
 class Form extends React.Component {
   state = { msg: '', error: false, count: 0, length: 50 } //TODO: ENV_CONFIG
 
-  onSubmit = (e) => {
-    this.props.sendMsg(this.state.msg)
-      .then(() => this.setState({ msg: '' }))
-      .catch(e => this.setState({ error: e.message }))
+  onSubmit = async (e) => {
     e.preventDefault();
+    try {
+      this.setState({ msg: '' });
+      await this.props.sendMsg(this.state.msg);
+    } catch (e) {
+      this.setState({ error: e.message })
+    }
   }
 
   setMsg = (msg) => this.setState(state => {

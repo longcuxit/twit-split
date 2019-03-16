@@ -1,40 +1,56 @@
 import React from "react";
 
-import { splitMessage } from '../utils';
+import { splitMessage, Api } from '../utils';
 
 const Context = React.createContext({});
 
 
 export class Provider extends React.Component {
-  state = { items: [], loading: true };
+  state = { items: [], loading: false };
 
-  sendMsg = (msg) => new Promise((next, error) => {
-    const { items } = this.state;
-    items.push(msg);
-    this.setState({ items });
-    next();
-  })
+  fetchMsg = async () => {
+    this.setState({ loading: true })
+    const msgs = await Api.getMsgs();
+    this.setState(({ items }) => {
+      items = items.concat(msgs);
+      return { items, loading: false };
+    });
+    return msgs;
+  }
 
-  sendMsgs = (msgs) => new Promise((next, error) => {
+  sendMsg = async (msg) => {
+    msg = await Api.putMsg(msg);
+    this.setState(({ items }) => {
+      items.push(msg);
+      return { items }
+    });
+  }
+
+  sendMsgs = async (msgs) => {
     const msg = msgs.shift();
     if (msg) {
-      this.sendMsg(msg)
-        .then(() => this.sendMsgs(msgs))
-        .then(next)
-        .catch(error)
-    } else {
-      next();
+      await this.sendMsg(msg);
+      return await this.sendMsgs(msgs);
     }
-  });
+  }
 
   methods = {
-    sendMsg: (msg) => new Promise(next => this.sendMsgs(splitMessage(msg)).then(next))
+    sendMsg: async (msg) => {
+      const msgs = splitMessage(msg);
+      this.setState({ loading: true });
+      await this.sendMsgs(msgs);
+      this.setState({ loading: false });
+    }
   }
 
   get contextProps() {
-    const { items } = this.state;
-    return Object.assign({ items }, this.methods);
+    return { ...this.state, ...this.methods };
   }
+
+  componentWillMount() {
+    this.fetchMsg();
+  }
+
   render() {
     return (
       <Context.Provider value={this.contextProps}>

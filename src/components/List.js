@@ -10,8 +10,8 @@ class List extends React.Component {
   cache = {
     itemCount: 0
   }
-  shouldComponentUpdate(props, state) {
-    const { cache } = this, { items } = props;
+  componentDidUpdate() {
+    const { cache } = this, { items } = this.props;
     if (cache.itemCount < items.length) {
       cache.itemCount = items.length;
       window.requestAnimationFrame(() => {
@@ -20,7 +20,6 @@ class List extends React.Component {
           scroller.scrollTo({ top: endScroll, behavior: 'smooth' });
         }
       });
-      return true;
     }
   }
 

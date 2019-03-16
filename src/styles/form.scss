@@ -31,25 +31,28 @@
     position: absolute;
     bottom: 100%;
     left: 50%;
-    transform: translateX(-50%);
-    margin-bottom: 0.25em;
-    border: 1px solid #b62525;
-    padding: 0.5em;
-    border-radius: 0.3333em;
-    color: #b62525;
-    background-color: #fff;
-    &::before {
-      content: '';
-      width: 0.5em;
-      height: 0.5em;
-      background-color: #fff;
+    transform-origin: 0 100%;
+    &_msg {
+      margin-bottom: 0.25em;
       border: 1px solid #b62525;
-      border-left: none;
-      border-top: none;
-      position: absolute;
-      bottom: -0.3em;
-      left: 50%;
-      transform: translateX(-50%) rotate(45deg);
+      padding: 0.5em;
+      border-radius: 0.3333em;
+      color: #b62525;
+      background-color: #fff;
+      transform: translateX(-50%);
+      &::before {
+        content: '';
+        width: 0.5em;
+        height: 0.5em;
+        background-color: #fff;
+        border: 1px solid #b62525;
+        border-left: none;
+        border-top: none;
+        position: absolute;
+        bottom: -0.3em;
+        left: 50%;
+        transform: translateX(-50%) rotate(45deg);
+      }
     }
   }
   &_send {

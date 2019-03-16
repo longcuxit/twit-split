@@ -3,6 +3,7 @@ import React from 'react';
 import { splitMessage } from '../utils';
 import { connect } from './Context';
 import TextField from './TextField';
+import Transition from './Transition';
 
 class Form extends React.Component {
   state = { msg: '', error: false, count: 0, length: 50 } //TODO: ENV_CONFIG
@@ -45,7 +46,9 @@ class Form extends React.Component {
       <div className="c-form">
         <div className="container">
           <form className="c-form_form row" onSubmit={this.onSubmit}>
-            {error && <div className="c-form_error">{error}</div>}
+            <Transition className="c-form_error" name='t-scale-bot'>
+              {error && <div className="c-form_error_msg">{error}</div>}
+            </Transition>
             
             <TextField
               label="Message:"

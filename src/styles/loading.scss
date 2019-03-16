@@ -1,0 +1,35 @@
+.c-loading {
+  position: fixed;
+  top: 2em;
+  left: 50%;
+  &_wrap {
+    transform: translateX(-50%);
+  }
+  &_icon {
+    // background-color: #000;
+    animation: rotate 2s linear infinite;
+    position: relative;
+    width: 3em;
+    height: 3em;
+    &::before {
+      content: '◌';
+      color: #346dc2;
+      font-size: 5em;
+      line-height: 0;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+      margin-top: -0.025em;
+    }
+  }
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

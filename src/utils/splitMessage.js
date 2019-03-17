@@ -20,7 +20,11 @@ function calculate(msg, part = 1) {
   let minLength = msg.length + 1 + (part + 1) * minCount ;
   let i = part - 1;
   while(i--) { minLength += (Math.pow(10,i) - Math.pow(10, i-1) - 1) * i; }
-  if (minLength/LIMIT > maxCount) return calculate(msg, part + 1);
+  
+  if (minLength/LIMIT > maxCount) {
+    const newPart = Math.ceil(minLength/LIMIT).toString().length
+    return calculate(msg, newPart === part ? part + 1: newPart);
+  }
   let count = 1;
   let p = '/' + Array(part).fill(NUM_TEMP);
   let cloneMsg = msg, result = [];

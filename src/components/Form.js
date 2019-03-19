@@ -48,8 +48,12 @@ class Form extends React.Component {
       <div className="c-form">
         <div className="container">
           <form className="c-form_form row" onSubmit={this.onSubmit}>
-            <Transition className="c-form_error" name='t-scale-bot'>
-              {error && <div className="c-form_error_msg">{error}</div>}
+            <Transition  name='t-scalebot'>
+              {error && (
+                <div className="c-form_error">
+                  <div className="c-form_error_msg">{error}</div>
+                </div>
+              )}
             </Transition>
             
             <TextField

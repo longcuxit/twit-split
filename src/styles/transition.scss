@@ -1,32 +1,49 @@
 .t {
-  &-drop-top {
-    transition: all 0.3s ease;
-    &.enter,
-    &.leave.run {
-      opacity: 0;
+  &-droptop {
+    &-enter,
+    &-leave {
+      transition: all 0.3s ease;
+    }
+    &-enter.run,
+    &-leave {
+      opacity: 1;
+      transform: none;
+    }
+    &-enter,
+    &-leave.run {
+      opacity: 0.01;
       transform: translateY(-50px);
     }
-    &.leave,
-    &.enter.run {
+  }
+  &-scalebot {
+    &-enter {
+      transition: all 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      transform-origin: 50% 100%;
+    }
+    &-leave {
+      transition: all 0.1s ease-out;
+      transform-origin: 50% 100%;
+    }
+    &-enter,
+    &-leave.run {
+      opacity: 0;
+      transform: scale(0);
+    }
+    &-leave,
+    &-enter.run {
       opacity: 1;
       transform: none;
     }
   }
-  &-scale-bot {
-    transform-origin: 50% 100%;
-    &.enter {
-      transition: all 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
-    &.leave {
-      transition: all 0.1s ease-out;
-    }
-    &.enter,
-    &.leave.run {
+  &-dropbot {
+    &-enter,
+    &-leave.run {
       opacity: 0;
-      transform: scale(0);
+      transform: translateY(50px);
+      transition: all 0.3s ease;
     }
-    &.leave,
-    &.enter.run {
+    &-leave,
+    &-enter.run {
       opacity: 1;
       transform: none;
     }

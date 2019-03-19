@@ -1,6 +1,7 @@
 import React from 'react';
 import 'scroll-behaviour/polyfill';
 import { connect } from './Context';
+import Transition from './Transition';
 
 
 class List extends React.Component {
@@ -42,13 +43,15 @@ class List extends React.Component {
     return (
       <section ref="scroller" className="c-list">
         <ul className="c-list_items container">
-          {items.map((item) => {
-            return (
-              <li key={item.id} className="c-list__item">
-                <div className="msg">{item.message}</div>
-              </li>
-            );
-          })}
+          <Transition name="t-droptop" schedule={60} reverse>
+            {items.map((item) => {
+              return (
+                <li key={item.id} className="c-list__item">
+                  <div className="msg">{item.message}</div>
+                </li>
+              );
+            })}
+          </Transition>
         </ul>
       </section>
     )

@@ -8,10 +8,12 @@ class Loading extends React.Component {
   render() {
     const { loading } = this.props;
     return (
-      <Transition name="t-drop-top" className="c-loading">
+      <Transition name="t-droptop">
         {loading && (
-          <div className="c-loading_wrap">
-            <div className="c-loading_icon"></div>
+          <div className="c-loading">
+              <div className="c-loading_wrap">
+                  <div className="c-loading_icon"></div>
+              </div>
           </div>
         )}
       </Transition>
